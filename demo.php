@@ -32,8 +32,8 @@ if($is_mobile_device){
 <div class="chocolat-parent">
 
   <?php  for ($x=1; $x<11; $x++) { ?>
-    <a class="chocolat-image" href="generator.php?name=<?=$full_img?>&src=<?=$x?>" title="caption image 1">
-      <img src="generator.php?name=<?=$name?>&src=<?=$x?>" alt="">
+    <a class="chocolat-image" href="generator.php?size=<?=$full_img?>&name=<?=$x?>" title="caption image 1">
+      <img src="generator.php?size=<?=$name?>&name=<?=$x?>" alt="">
     </a>
   <?php } ?>
 </div>
