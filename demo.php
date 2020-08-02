@@ -1,3 +1,5 @@
+<?php require_once 'device.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,20 +11,13 @@
   <title>Document</title>
 </head>
 <?php
-function check_mobile_device() {
-    $mobile_agent_array = array('ipad', 'iphone', 'android', 'pocket', 'palm', 'windows ce', 'windowsce', 'cellphone', 'opera mobi', 'ipod', 'small', 'sharp', 'sonyericsson', 'symbian', 'opera mini', 'nokia', 'htc_', 'samsung', 'motorola', 'smartphone', 'blackberry', 'playstation portable', 'tablet browser');
-    $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-    foreach ($mobile_agent_array as $value) {
-        if (strpos($agent, $value) !== false) return true;
-    }
-    return false;
-}
-$is_mobile_device = check_mobile_device();
-if($is_mobile_device){
-    $name= "mic";
+if(Device::isMobileDevice($_SERVER['HTTP_USER_AGENT'])){
+    $name = "mic";
     $full_img = "med";
+    $med_img = "min";
 }else{
     $name= "min";
+    $med_img = "med";
     $full_img = "big";
   }
 ?>
@@ -31,7 +26,9 @@ if($is_mobile_device){
 <div class="chocolat-parent">
 
   <?php  for ($x=1; $x<11; $x++) { ?>
-    <a class="chocolat-image" href="generator.php?size=<?=$full_img?>&name=<?=$x?>" title="caption image 1">
+    <a class="chocolat-image" href="generator.php?size=<?=$full_img?>&name=<?=$x?>" data-min="generator.php?size=<?=$name?>&name=<?=$x?>"
+      data-med ="generator.php?size=<?=$med_img?>&name=<?=$x?>"
+       title="caption image 1">
       <img src="generator.php?size=<?=$name?>&name=<?=$x?>" alt="">
     </a>
   <?php } ?>

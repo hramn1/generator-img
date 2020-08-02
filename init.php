@@ -72,6 +72,9 @@ class Database {
 	public function getResultAsArray() {
 		return mysqli_fetch_all($this->last_result, MYSQLI_ASSOC);
 	}
+  public function getOneResultAsArray() {
+    return mysqli_fetch_assoc($this->last_result);
+  }
 
 	public function getLastId() {
 		return mysqli_insert_id($this->db_resource);

@@ -1,6 +1,7 @@
 (function () {
     'use strict';
-
+      const arrMin = [];
+      const arrMed = [];
     let timerDebounce = undefined;
     function debounce(duration, callback) {
       clearTimeout(timerDebounce);
@@ -33,14 +34,21 @@
     function loadImage({
       src,
       srcset,
-      sizes
+      sizes,
+      title,
+      dataMin,
+      dataMed,
     }) {
       const image = new Image();
       image.src = src;
-
       if (srcset) {
         image.srcset = srcset;
       }
+
+      arrMin.push(dataMin);
+      arrMed.push(dataMed);
+      document.querySelector('.chocolat-img2').src = arrMin[arrMin.length-2]
+      document.querySelector('.chocolat-img3').src = arrMed[arrMed.length-2]
 
       if (sizes) {
         image.sizes = sizes;
@@ -143,7 +151,7 @@
       className: undefined,
       imageSize: 'scale-down',
       // 'scale-down', 'contain', 'cover' or 'native'
-      fullScreen: false,
+      fullScreen: true,
       loop: false,
       linkImages: true,
       setIndex: 0,
@@ -184,7 +192,7 @@
         this.images = [];
         this.events = [];
         this.state = {
-          fullScreenOpen: false,
+          fullScreenOpen: true,
           initialZoomState: null,
           initialized: false,
           timer: false,
@@ -198,7 +206,9 @@
               title: el.getAttribute('title'),
               src: el.getAttribute('href'),
               srcset: el.getAttribute('data-srcset'),
-              sizes: el.getAttribute('data-sizes')
+              sizes: el.getAttribute('data-sizes'),
+              dataMin: el.getAttribute('data-min'),
+              dataMed: el.getAttribute('data-med'),
             });
             this.off(el, 'click.chocolat');
             this.on(el, 'click.chocolat', e => {
@@ -209,7 +219,6 @@
         } else {
           this.images = elements;
         }
-
         if (this.settings.container instanceof Element || this.settings.container instanceof HTMLElement) {
           this.elems.container = this.settings.container;
         } else {
@@ -346,7 +355,7 @@
         } = fit(fitOptions);
         return transitionAsPromise(() => {
           Object.assign(this.elems.imageWrapper.style, {
-            width: width + 'px',
+            width: 100 + "%",
             height: height + 'px'
           });
         }, this.elems.imageWrapper);
@@ -441,6 +450,7 @@
 
       markup() {
         this.elems.container.classList.add('chocolat-open', this.settings.className);
+        console.log(this.elems);
 
         if (this.settings.imageSize == 'cover') {
           this.elems.container.classList.add('chocolat-cover');
@@ -479,8 +489,14 @@
         this.elems.imageWrapper.setAttribute('class', 'chocolat-image-wrapper');
         this.elems.imageCanvas.appendChild(this.elems.imageWrapper);
         this.elems.img = document.createElement('img');
+        this.elems.img2 = document.createElement('img');
+        this.elems.img3 = document.createElement('img');
         this.elems.img.setAttribute('class', 'chocolat-img');
+        this.elems.img2.setAttribute('class', 'chocolat-img2');
+        this.elems.img3.setAttribute('class', 'chocolat-img3');
         this.elems.imageWrapper.appendChild(this.elems.img);
+        this.elems.imageWrapper.appendChild(this.elems.img2);
+        this.elems.imageWrapper.appendChild(this.elems.img3);
         this.elems.right = document.createElement('div');
         this.elems.right.setAttribute('class', 'chocolat-right');
         this.elems.center.appendChild(this.elems.right);

@@ -72,9 +72,7 @@
 }
 
 .chocolat-image-wrapper .chocolat-img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: relative;
 }
 .chocolat-wrapper .chocolat-left {
     width: 50px;
