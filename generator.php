@@ -41,12 +41,6 @@ if ($dbHelper->getLastError()) {
       $imgCache->setCache($filenameCache,$image_p);
       //
       imagedestroy($image_p);
-} else {
-  $filename = "cache/$filenameCache.jpg";
-
-  $image = imagecreatefromjpeg($filename);
-  imagejpeg($image, null, 100);
-
 }
 
 }

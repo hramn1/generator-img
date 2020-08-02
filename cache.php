@@ -8,12 +8,20 @@ CONST PATH = 'cache/';
     imagejpeg($image, self::PATH . $name .".jpg" );
   }
 
-  public static function getCache($name) {
-    if ($name==true) {
-    return true;
-    }
-    else {
-      return false;
-    }
-  }
+  public static function getCache($name)
+  	{
+  		$fullPath = self::PATH . $name .".jpg";
+
+  		if (!file_exists($fullPath)){
+   	  		return false;
+  		}
+
+  		$type = 'image/jpeg';
+
+  		header('Content-Type:'.$type);
+
+  		header('Content-Length: ' . filesize($fullPath));
+
+  		readfile($fullPath);
+  	}
 }
