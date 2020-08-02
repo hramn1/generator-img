@@ -17,8 +17,10 @@ if ($dbHelper->getLastError()) {
   } else {
     $data = ['big'];
     $src_img = "3";
+    $full_name = "big3";
     }
-    $filenameCache = "cache/img-$full_name";
+    $filenameCache = "img-$full_name";
+    if ($imgCache->getCache($filenameCache)==false){
       $filename = "gallery/img-$src_img.jpg";
       $dbHelper->executeQuery('SELECT width FROM imgsize WHERE name = ?', $data);
       $rowWidth = $dbHelper->getResultAsArray();
@@ -36,9 +38,16 @@ if ($dbHelper->getLastError()) {
       imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
       // // вывод
       imagejpeg($image_p, null, 100);
+      $imgCache->setCache($filenameCache,$image_p);
       //
       imagedestroy($image_p);
+} else {
+  $filename = "cache/$filenameCache.jpg";
 
+  $image = imagecreatefromjpeg($filename);
+  imagejpeg($image, null, 100);
+
+}
 
 }
 
